@@ -1,69 +1,105 @@
 # Misión KSL-01
 
 Juego HTML, CSS y JavaScript para KSL Arte y Diseño Gráfico S.A.S.
+Archivos: index.html, style.css, script.js y la carpeta assets/ con logo-ksl.png.
 
-## Cambios versión 2
-- Logo actualizado con fondo transparente.
-- Vidas iniciales: 5.
-- Límite máximo de monedas recolectadas: 30.
+===========================================================================
+VERSIÓN 10 · REESCRITURA DEL MOTOR, FLUIDEZ Y RUTA DE 37.000 px
+===========================================================================
 
-## Cambios versión 3
-- Ahora el premio solo se desbloquea si el jugador llega a la meta con 30 monedas.
-- Si llega con menos de 30 monedas, aparece un aviso y la nave vuelve un poco atrás para seguir jugando.
+## Por qué antes iba a tirones
+El juego dibujaba todo el nivel completo en cada fotograma y creaba cientos de
+degradados y sombras nuevas 60 veces por segundo. Medido sobre el código
+anterior, un fotograma costaba más de 400 degradados y unas 90 operaciones de
+sombra (shadowBlur), que es el efecto más caro del canvas. Además la física
+estaba atada a la velocidad de refresco del monitor, así que en un equipo lento
+el juego no solo se veía trabado: también se movía más despacio.
 
-## Cambios versión 4
-- En la pantalla de victoria ahora hay dos opciones:
-  - Reclamar premio.
-  - Jugar de nuevo.
-- Se eliminó la redirección automática para que el usuario decida.
+## Qué se cambió para que corra fluido
+- Sprites pre-renderizados: monedas, contenedores, drones, centinelas,
+  asteroides, potenciadores, balizas, plataformas, planetas, nebulosas y la
+  propia nave se dibujan UNA sola vez en lienzos fuera de pantalla y luego se
+  copian con drawImage. Un fotograma pasó de más de 400 degradados a 3 o 4.
+- Cero shadowBlur durante el juego: el brillo queda "horneado" en el sprite.
+- Recorte de cámara (culling): solo se procesa y dibuja lo que entra en
+  pantalla, aunque la ruta mida 37.000 px.
+- Paso de física fijo a 60 Hz con acumulador e interpolación de render. El juego
+  se mueve igual en un monitor de 60 Hz, de 120 Hz o en un celular lento.
+- Piscina de partículas reutilizables: no se crea basura para el recolector.
+- Calidad adaptativa automática. Si el equipo no alcanza los fotogramas, el
+  juego baja solo a Media o Básica (menos partículas, menos capas de estrellas,
+  resolución interna más baja). También se puede forzar con el botón
+  "Gráficos" del HUD.
+- Resolución interna con tope de 1.700 px de ancho: se ve nítido sin ahogar a
+  las pantallas de alta densidad.
+- Contador de FPS visible en el HUD para verificarlo en cualquier dispositivo.
 
-## Cambios versión 5 - ampliación del juego
-- El recorrido fue ampliado de 8.400 px a 12.400 px para que la misión dure más.
-- La meta ahora exige 80 monedas para desbloquear el premio.
-- Se agregaron nuevos sectores de misión: Base, Nebulosa Azul, Cinturón KSL, Zona Roja, Ruta Dorada y Portal Premio.
-- Se agregaron checkpoints que guardan el avance y entregan monedas extra.
-- Se agregaron power-ups:
-  - T: impulso turbo.
-  - S: escudo protector.
-- Se agregaron cajas de escudo y nuevas cajas KSL en el tramo final.
-- Se agregaron más drones enemigos y centinelas orbitales.
-- Se mejoró el HUD con escudo, sector actual y mensajes más claros.
-- Se agregaron mensajes flotantes, récord local de monedas, tip inicial y pausa con la tecla P.
-- Se ampliaron fondos, nebulosas y planetas para que el juego se sienta menos corto sin cambiar su idea central.
+## Recorrido y contenido
+- Recorrido ajustado a 37.000 px (antes 14.000 px).
+- 10 sectores con tinte de color propio y aviso en pantalla al entrar:
+  Base KSL, Nebulosa Azul, Cinturón KSL, Anillos Verdes, Zona Roja,
+  Campo de Asteroides, Ruta Dorada, Vía Plateada, Umbral KSL y Portal Premio.
+- 89 plataformas: 35 tramos de suelo con huecos, 26 medias, 16 altas y 12
+  plataformas móviles nuevas.
+- 272 monedas sueltas en ruta, 23 contenedores KSL y 8 balizas de guardado.
+  Entre monedas, cajas y balizas hay más de 400 monedas disponibles, así que la
+  meta de 80 se puede completar por varias rutas distintas.
+- 43 enemigos (24 drones de superficie y 19 centinelas orbitales) y 15
+  asteroides a la deriva que ahora giran y se desplazan.
+- 22 potenciadores: 7 de turbo, 7 de escudo y 8 orbes de vida (tope de 5 vidas).
+- El tramo final queda libre de obstáculos para cerrar la misión con calma.
+- Verificado: el pasillo vertical más angosto de toda la ruta mide 215 px y la
+  nave mide 54 px de alto, así que no hay ningún punto sin paso.
+
+## Reglas de juego (sin cambios)
+- Meta de 80 monedas. El Portal Premio solo abre con las 80 completas.
+- Si llegas con menos, aparece el aviso y la nave retrocede un poco para seguir
+  jugando.
+- 5 vidas, escudo acumulable hasta 3 cargas.
+- Las balizas guardan el punto de reaparición si caes al vacío y dan +5 monedas.
+- En la pantalla de victoria siguen las dos opciones: Reclamar premio (WhatsApp)
+  y Jugar de nuevo. No hay redirección automática.
+- El enlace de reclamo se cambia en script.js, en la constante "paginaDeLoggeo".
+
+## Diseño
+- HUD tipo sala de control: lecturas separadas de monedas, vida, escudo, récord
+  y sector, con tipografía monoespaciada para la telemetría. La franja de estado
+  es de posición fija, así que los mensajes largos ya no mueven el lienzo.
+- Riel de progreso dentro del lienzo con los 10 sectores marcados, las 8 balizas
+  y la posición de la nave.
+- Fondo con tres capas de estrellas en parallax, nebulosas, planetas con anillos,
+  estaciones lejanas y polvo en primer plano.
+- Nave con inclinación según el ascenso, estela de propulsión y parpadeo de
+  invulnerabilidad tras recibir un golpe.
+- Pantallas de inicio, derrota y victoria rediseñadas con datos de misión
+  (monedas, tiempo, récord y último sector alcanzado).
+- Sonido opcional (se puede silenciar con el botón del HUD o la tecla M).
+- Responsive hasta 360 px de ancho, respeta "prefers-reduced-motion" y tiene
+  foco visible para teclado.
 
 ## Controles
-- PC: flechas izquierda/derecha o A/D para moverte.
-- Elevar nave: espacio, flecha arriba o W.
-- Pausa: P.
-- Celular: botones táctiles inferiores.
+- Computador: ← → o A/D para moverte · Espacio, ↑ o W para elevarte ·
+  P o Esc para pausar · M para el sonido · Enter para reiniciar.
+- Celular: los tres botones inferiores, o toca la pantalla del juego para
+  elevarte. El juego se pausa solo si cambias de pestaña.
 
+## Ajustes rápidos en script.js (todo está arriba del archivo)
+- LEVEL_W: largo del recorrido.
+- META_MONEDAS: monedas necesarias para el premio.
+- VIDAS_INICIALES, VIDAS_MAX, ESCUDO_MAX.
+- GRAVITY y THRUST: sensación de vuelo.
+- SECTORES: nombres, posiciones y tinte de color de cada sector.
 
-Actualización visual/diseño:
-- Recorrido ampliado a 14.000px.
-- Meta de monedas ajustada a 80.
-- Cajas KSL rediseñadas como contenedores espaciales con brillo.
-- Checkpoints rediseñados como portales/gates de guardado.
-- Obstáculos superiores equilibrados: sin láseres, con asteroides ocasionales y centinelas más espaciados para evitar pasar todo por arriba sin volverlo imposible.
-- Monedas redistribuidas en líneas más espaciadas y con rutas de riesgo/recompensa.
-
-
-AJUSTE DE BALANCE v7
-- Recorrido ajustado a 14.000px.
-- Láseres eliminados.
-- Asteroides superiores reducidos y más espaciados.
-- Checkpoints rediseñados como balizas KSL de guardado.
-- Se eliminó el empuje brusco de cámara al recoger cajas o recibir golpes.
-
-
-AJUSTE v8 - Potenciador de vida
-- Se agregó un único potenciador de vida en el recorrido.
-- Al recogerlo recupera +1 vida, con límite máximo de 5 vidas.
-- No se modificó la estructura, dificultad, recorrido ni comportamiento general del juego.
-
-
-AJUSTE v9 - Vida extra y meta 80
-- Se ajustaron los orbes de vida para que existan 3 durante la partida.
-- El límite máximo se mantiene en 5 vidas.
-- La meta de monedas se ajustó a 80.
-- Se retiró el obstáculo superior del tramo final para suavizar el cierre de la misión.
-- No se modificó el resto del recorrido.
+===========================================================================
+HISTORIAL ANTERIOR
+===========================================================================
+- v2: logo con fondo transparente, 5 vidas.
+- v3: el premio solo se desbloquea llegando a la meta con las monedas exigidas.
+- v4: pantalla de victoria con Reclamar premio y Jugar de nuevo, sin redirección
+  automática.
+- v5: recorrido ampliado, sectores, checkpoints y power-ups.
+- v6: refuerzo visual del HUD y los paneles.
+- v7: recorrido de 14.000 px, sin láseres, asteroides más espaciados, sin empuje
+  brusco de cámara.
+- v8: primer potenciador de vida.
+- v9: 3 orbes de vida, meta de 80 monedas, tramo final sin obstáculo superior.

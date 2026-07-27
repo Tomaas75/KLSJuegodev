@@ -2,83 +2,122 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Misión KSL-01</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#020617" />
+  <meta name="description" content="Misión KSL-01: pilota la nave KSL-01 por una ruta espacial de 37.000 px, reúne 80 monedas y reclama tu premio con KSL Arte y Diseño Gráfico S.A.S." />
+  <title>Misión KSL-01 · KSL Arte y Diseño Gráfico S.A.S.</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
+
+    <!-- ============================ PANTALLA DE INICIO ============================ -->
     <section id="startScreen" class="screen active">
       <div class="panel">
-        <img class="logo" src="assets/logo-ksl.png" alt="KSL Arte y Diseño Gráfico S.A.S." />
-        <h1>Misión KSL-01</h1>
+        <img class="logo" src="assets/logo-ksl.png" alt="KSL Arte y Diseño Gráfico S.A.S." onerror="this.style.display='none'" />
+        <p class="eyebrow">Misión KSL-01 · Ruta de 37.000 px</p>
+        <h1>Pilota la nave<br />KSL-01</h1>
         <h2>KSL Arte y Diseño Gráfico S.A.S.</h2>
         <p>
-          Pilota la nave KSL-01 en una ruta espacial extendida de 14.000px. Recolecta 80 monedas,
-          activa contenedores KSL, supera drones, centinelas, asteroides ocasionales y checkpoints
-          para desbloquear tu premio.
+          Cruza diez sectores espaciales, reúne <strong>80 monedas KSL</strong>, abre contenedores,
+          esquiva drones, centinelas y asteroides, y guarda tu avance en las balizas.
+          Llega al Portal Premio con las monedas completas para reclamar tu regalo.
         </p>
+
+        <ul class="briefing">
+          <li><span>10</span>sectores</li>
+          <li><span>37k</span>píxeles de ruta</li>
+          <li><span>8</span>balizas de guardado</li>
+          <li><span>5</span>vidas</li>
+        </ul>
+
         <div class="menu-actions">
-          <button id="startBtn">Iniciar misión</button>
-          <a class="product-link" href="https://www.promocionalesenlinea.com/KSL_ARTEYDISENO_GRAFICO" target="_blank" rel="noopener noreferrer">Productos KSL</a>
+          <button id="startBtn" class="cta">Iniciar misión</button>
+          <a class="product-link" href="https://www.promocionalesenlinea.com/KSL_ARTEYDISENO_GRAFICO" target="_blank" rel="noopener noreferrer">Ver productos KSL</a>
         </div>
-        <small>
-          PC: ← → o A/D para moverte, espacio/↑/W para elevarte, P para pausar.
-          Celular: usa los controles táctiles.
-        </small>
+
+        <div class="controls-help">
+          <div><b>Computador</b><span>← → o A/D para moverte · Espacio, ↑ o W para elevarte · P pausa · M sonido</span></div>
+          <div><b>Celular</b><span>Usa los botones de abajo o toca la pantalla del juego para elevarte</span></div>
+        </div>
       </div>
     </section>
 
+    <!-- ============================ MISIÓN FALLIDA ============================ -->
     <section id="deathScreen" class="screen">
       <div class="panel danger">
-        <img class="logo small" src="assets/logo-ksl.png" alt="KSL" />
+        <img class="logo small" src="assets/logo-ksl.png" alt="KSL" onerror="this.style.display='none'" />
+        <p class="eyebrow">Transmisión perdida</p>
         <h1>Misión fallida</h1>
-        <p>La nave KSL-01 fue destruida antes de completar el recorrido.</p>
-        <p class="score-line">Monedas obtenidas: <strong id="deathCoins">0</strong></p>
+        <p>La nave KSL-01 fue destruida antes de alcanzar el Portal Premio.</p>
+        <div class="stats">
+          <div><b id="deathCoins">0</b><span>monedas obtenidas</span></div>
+          <div><b id="deathSector">Base KSL</b><span>último sector</span></div>
+        </div>
         <div class="menu-actions">
-          <button id="retryBtn">Reintentar</button>
-          <a class="product-link" href="https://www.promocionalesenlinea.com/KSL_ARTEYDISENO_GRAFICO" target="_blank" rel="noopener noreferrer">Productos KSL</a>
+          <button id="retryBtn" class="cta">Reintentar misión</button>
+          <a class="product-link" href="https://www.promocionalesenlinea.com/KSL_ARTEYDISENO_GRAFICO" target="_blank" rel="noopener noreferrer">Ver productos KSL</a>
         </div>
       </div>
     </section>
 
+    <!-- ============================ MISIÓN COMPLETADA ============================ -->
     <section id="winScreen" class="screen">
       <div class="panel success">
-        <img class="logo small" src="assets/logo-ksl.png" alt="KSL" />
+        <img class="logo small" src="assets/logo-ksl.png" alt="KSL" onerror="this.style.display='none'" />
+        <p class="eyebrow">Portal Premio abierto</p>
         <h1>¡Misión completada!</h1>
         <p>
-          Has obtenido un premio por parte de
-          <strong>KSL Arte y Diseño Gráfico S.A.S.</strong>
+          Ganaste un premio de <strong>KSL Arte y Diseño Gráfico S.A.S.</strong>
+          Escríbenos por WhatsApp para reclamarlo.
         </p>
-        <p class="score-line">Monedas recolectadas: <strong id="winCoins">0</strong></p>
-        <p class="redirect">Puedes reclamar el premio ahora o jugar nuevamente.</p>
+        <div class="stats">
+          <div><b id="winCoins">0</b><span>monedas recolectadas</span></div>
+          <div><b id="winTime">00:00</b><span>tiempo de misión</span></div>
+          <div><b id="winRecord">0</b><span>tu récord</span></div>
+        </div>
         <div class="win-actions">
-          <a id="loginLink" href="https://wa.me/573142347047?text=Hola,%20soy%20ganador%20de%20la%20Misi%C3%B3n%20KSL-01.%20Quiero%20reclamar%20mi%20premio%20de%20KSL%20Arte%20y%20Dise%C3%B1o%20Gr%C3%A1fico%20S.A.S.">Reclamar premio</a>
-          <a class="product-link" href="https://www.promocionalesenlinea.com/KSL_ARTEYDISENO_GRAFICO" target="_blank" rel="noopener noreferrer">Productos KSL</a>
+          <a id="loginLink" class="cta" href="https://wa.me/573142347047?text=Hola,%20soy%20ganador%20de%20la%20Misi%C3%B3n%20KSL-01.%20Quiero%20reclamar%20mi%20premio%20de%20KSL%20Arte%20y%20Dise%C3%B1o%20Gr%C3%A1fico%20S.A.S.">Reclamar premio</a>
+          <a class="product-link" href="https://www.promocionalesenlinea.com/KSL_ARTEYDISENO_GRAFICO" target="_blank" rel="noopener noreferrer">Ver productos KSL</a>
           <button id="playAgainBtn">Jugar de nuevo</button>
         </div>
       </div>
     </section>
 
+    <!-- ============================ JUEGO ============================ -->
     <main class="game-wrap">
       <header class="hud">
         <div class="brand">
-          <img src="assets/logo-ksl.png" alt="KSL" />
+          <img src="assets/logo-ksl.png" alt="KSL" onerror="this.style.display='none'" />
           <span>KSL Arte y Diseño Gráfico S.A.S.</span>
         </div>
-        <div>Monedas: <strong id="coins">0/80</strong></div>
-        <div>Vida: <strong id="lives">5</strong></div>
-        <div>Escudo: <strong id="shield">0</strong></div>
-        <div>Sector: <strong id="sector">Base</strong></div>
+
+        <div class="readouts">
+          <div class="readout"><i>Monedas</i><strong id="coins">0/80</strong></div>
+          <div class="readout"><i>Vida</i><strong id="lives">5</strong></div>
+          <div class="readout"><i>Escudo</i><strong id="shield">0</strong></div>
+          <div class="readout"><i>Récord</i><strong id="record">0</strong></div>
+          <div class="readout wide"><i>Sector</i><strong id="sector">Base KSL</strong></div>
+        </div>
+
+        <div class="hud-tools">
+          <button id="pauseBtn" type="button" class="tool">Pausa</button>
+          <button id="soundBtn" type="button" class="tool" aria-pressed="true">Sonido: sí</button>
+          <button id="qualityBtn" type="button" class="tool">Gráficos: Alta</button>
+          <span id="fps" class="tool fps">60 FPS</span>
+        </div>
+
         <div class="status-chip" aria-live="polite"><strong id="status">Listo</strong></div>
       </header>
 
-      <canvas id="game" width="1280" height="720"></canvas>
+      <div class="canvas-frame">
+        <canvas id="game" width="1280" height="720" aria-label="Área de juego Misión KSL-01"></canvas>
+      </div>
 
       <nav class="touch-controls" aria-label="Controles táctiles">
-        <button id="leftBtn">◀</button>
-        <button id="upBtn">▲</button>
-        <button id="rightBtn">▶</button>
+        <button id="leftBtn" type="button" aria-label="Mover a la izquierda">◀</button>
+        <button id="upBtn" type="button" class="thrust" aria-label="Elevar la nave">▲ Impulso</button>
+        <button id="rightBtn" type="button" aria-label="Mover a la derecha">▶</button>
       </nav>
 
       <div id="pauseBadge" class="pause-badge" aria-live="polite">Pausa</div>
