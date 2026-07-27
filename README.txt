@@ -46,7 +46,7 @@ el juego no solo se veía trabado: también se movía más despacio.
   meta de 80 se puede completar por varias rutas distintas.
 - 43 enemigos (24 drones de superficie y 19 centinelas orbitales) y 15
   asteroides a la deriva que ahora giran y se desplazan.
-- 22 potenciadores: 7 de turbo, 7 de escudo y 8 orbes de vida (tope de 5 vidas).
+- 22 potenciadores: 7 de turbo, 7 de escudo y 8 orbes de vida (tope de 10 vidas).
 - El tramo final queda libre de obstáculos para cerrar la misión con calma.
 - Verificado: el pasillo vertical más angosto de toda la ruta mide 215 px y la
   nave mide 54 px de alto, así que no hay ningún punto sin paso.
@@ -55,7 +55,7 @@ el juego no solo se veía trabado: también se movía más despacio.
 - Meta de 80 monedas. El Portal Premio solo abre con las 80 completas.
 - Si llegas con menos, aparece el aviso y la nave retrocede un poco para seguir
   jugando.
-- 5 vidas, escudo acumulable hasta 3 cargas.
+- 10 vidas, escudo acumulable hasta 3 cargas.
 - Las balizas guardan el punto de reaparición si caes al vacío y dan +5 monedas.
 - En la pantalla de victoria siguen las dos opciones: Reclamar premio (WhatsApp)
   y Jugar de nuevo. No hay redirección automática.
@@ -89,6 +89,23 @@ el juego no solo se veía trabado: también se movía más despacio.
 - VIDAS_INICIALES, VIDAS_MAX, ESCUDO_MAX.
 - GRAVITY y THRUST: sensación de vuelo.
 - SECTORES: nombres, posiciones y tinte de color de cada sector.
+
+===========================================================================
+VERSIÓN 10.1 · TIPOGRAFÍA Y VIDAS
+===========================================================================
+- Vidas iniciales y tope subidos de 5 a 10 (constantes VIDAS_INICIALES y
+  VIDAS_MAX en script.js). Los 8 orbes de vida siguen igual.
+- Tipografía corregida. El problema era la pila de fuentes: "Archivo Black" no
+  existe en la mayoría de equipos y el navegador caía en Haettenschweiler o
+  Impact, que son condensadas y se vuelven ilegibles en celular. Ahora los
+  titulares usan la sans del sistema en peso 900 (San Francisco en iPhone,
+  Roboto en Android, Segoe UI en Windows), sin descargas externas.
+- Se quitaron las mayúsculas forzadas y el espaciado exagerado entre letras en
+  el titular, los botones, el subtítulo y el cartel de pausa.
+- Textos de apoyo más grandes: párrafos de 15 a 17 px, ayuda de controles a
+  14 px, franja de estado del HUD a 13,5 px y chips de herramientas a 11,5 px.
+- Las mayúsculas se conservan solo en etiquetas cortas (MONEDAS, VIDA, SECTORES),
+  donde sí se leen bien.
 
 ===========================================================================
 HISTORIAL ANTERIOR
